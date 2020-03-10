@@ -1,4 +1,5 @@
 #include <iostream>
+#include<ctime>
 
 void PrintIntroduction()
 {
@@ -8,13 +9,13 @@ void PrintIntroduction()
     std::cout << "-------------------------------------------------------------\n";
 }
 
-bool PlayGame()
+bool PlayGame(int Difficulty)
 {
     PrintIntroduction();
 
-    const int CodeA = 4;
-    const int CodeB = 3;
-    const int CodeC = 2;
+    const int CodeA = rand() % Difficulty + Difficulty;
+    const int CodeB = rand() % Difficulty + Difficulty;
+    const int CodeC = rand() % Difficulty + Difficulty;
     const int CodeSum = CodeA + CodeB + CodeC;
     const int CodeProduct = CodeA * CodeB * CodeC;
 
@@ -35,28 +36,37 @@ bool PlayGame()
     // Check if the players guess is correct
     if (GuessSum == CodeSum && GuessProduct == CodeProduct)
     {
-        std::cout << "!!!!!!!!!!!!\n";
-        std::cout << "| You win! |\n";
-        std::cout << "!!!!!!!!!!!!\n";
+        std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
+        std::cout << "| COMBINATION SUCCESSFUL |\n";
+        std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
         return true;
     }
     else
     {
-        std::cout << "=============\n";
-        std::cout << "! You Lose! |\n";
-        std::cout << "=============\n";
+        std::cout << "=============================\n";
+        std::cout << "! ERROR INVALID COMBINATION |\n";
+        std::cout << "=============================\n";
         return false;
     }
 }
 
 int main()
 {
-    while (true)
+    srand(time(NULL));
+    int LevelDifficulty = 1;
+    int MaxDifficulty = 5;
+    while (LevelDifficulty<= MaxDifficulty)
     {
-        bool bLevelComplete = PlayGame();
+        bool bLevelComplete = PlayGame(LevelDifficulty);
         std::cin.clear(); // Clears any errors
         std::cin.ignore(); // Discards the buffer
+        if (bLevelComplete)
+        {
+            ++LevelDifficulty;
+        }
     }
-
+    std::cout << "*******************************\n";
+    std::cout << "*** SUCCESS ALL FILES FOUND ***\n";
+    std::cout << "*******************************\n";
     return 0;
 }
